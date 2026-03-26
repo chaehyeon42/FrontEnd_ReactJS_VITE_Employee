@@ -19,13 +19,16 @@
  *  → 필요한 상태와 액션만 골라서 가져옵니다.
  */
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
+
 import { EmployeeApi }   from '../api/employeeApi.js';
 import { DepartmentApi } from '../api/departmentApi.js';
 
 const employeeApi   = new EmployeeApi();
 const departmentApi = new DepartmentApi();
 
-export const useEmployeeStore = create((set, get) => ({
+//employeeStore 생성
+export const useEmployeeStore = create(devtools((set, get) => ({
 
     // ── 상태(State) ───────────────────────────────────────────────────
     employees:   [],   // 현재 페이지 직원 목록
@@ -79,4 +82,4 @@ export const useEmployeeStore = create((set, get) => ({
     deleteEmployee: async (id) => {
         await employeeApi.delete(id);
     },
-}));
+})));
